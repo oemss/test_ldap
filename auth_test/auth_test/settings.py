@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 AUTHENTICATION_BACKENDS = [
     'django_auth_ldap.backend.LDAPBackend',
@@ -19,6 +20,14 @@ AUTHENTICATION_BACKENDS = [
 
 
 AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1:389"
+AUTH_LDAP_BIND_DN = 'cn=admin,dc=test'
+AUTH_LDAP_BIND_PASSWORD = '1234'
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    'ou=users,dc=test',
+    ldap.SCOPE_SUBTREE,
+    '(uid=%(user)s)',
+)
+
 
 
 INSTALLED_APPS = [
